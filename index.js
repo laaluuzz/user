@@ -5,7 +5,7 @@ const userRoute = require("./routes/user");
 
 // settings
 const app = express();
-const port = process.env.PORT || 9000;
+// const port = process.env.PORT || 9000;
 
 // middlewares
 app.use(express.json());
@@ -23,4 +23,4 @@ mongoose
   .catch((error) => console.error(error));
 
 // server listening
-app.listen(port, () => console.log("Server listening to", port));
+// app.listen(port, () => console.log("Server listening to", port));
