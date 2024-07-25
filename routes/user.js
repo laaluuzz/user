@@ -29,13 +29,18 @@ router.get("/users/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-// delete a user
+// Delete a user
 router.delete("/users/:id", (req, res) => {
   const { id } = req.params;
   userSchema
-    .remove({ _id: id })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+    .deleteOne({ _id: id })
+    .then((data) => {
+      if (data.deletedCount === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json({ message: 'User deleted successfully' });
+    })
+    .catch((error) => res.status(500).json({ message: error.message }));
 });
 
 // update a user
