@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const userRoute = require("./routes/user");
+const regionRoute = require("./routes/region");
+
 const cors = require("cors"); // Importa el middleware CORS
 
 // settings
@@ -19,6 +21,7 @@ app.get("/", (req, res) => {
 
 // Rutas de usuarios utilizando el middleware de ruta
 app.use("/api", userRoute);
+app.use("/api", regionRoute); // Añade las rutas de región
 
 // mongodb connection
 mongoose

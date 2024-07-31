@@ -1,56 +1,54 @@
 const express = require("express");
-const userSchema = require("../models/user");
+const regionSchema = require("../models/region");
 
 const router = express.Router();
 
-// create user
-router.post("/users", (req, res) => {
-  const user = userSchema(req.body);
-  user
+// create region
+router.post("/regions", (req, res) => {
+  const region = regionSchema(req.body);
+  region
     .save()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
-// get all users
-router.get("/users", (req, res) => {
-  userSchema
+// get all regions
+router.get("/regions", (req, res) => {
+  regionSchema
     .find()
-    .populate('region')
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
-// get a user
-router.get("/users/:id", (req, res) => {
+// get a region
+router.get("/regions/:id", (req, res) => {
   const { id } = req.params;
-  userSchema
+  regionSchema
     .findById(id)
-    .populate('region')
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
-// Delete a user
-router.delete("/users/:id", (req, res) => {
+// Delete a region
+router.delete("/regions/:id", (req, res) => {
   const { id } = req.params;
-  userSchema
+  regionSchema
     .deleteOne({ _id: id })
     .then((data) => {
       if (data.deletedCount === 0) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'Region not found' });
       }
-      res.json({ message: 'User deleted successfully' });
+      res.json({ message: 'Region deleted successfully' });
     })
     .catch((error) => res.status(500).json({ message: error.message }));
 });
 
-// update a user
-router.put("/users/:id", (req, res) => {
+// update a region
+router.put("/regions/:id", (req, res) => {
   const { id } = req.params;
-  const { name, age, email, region } = req.body;
-  userSchema
-    .updateOne({ _id: id }, { $set: { name, age, email, region } })
+  const { name } = req.body;
+  regionSchema
+    .updateOne({ _id: id }, { $set: { name } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });

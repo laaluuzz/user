@@ -7,12 +7,16 @@ const userSchema = mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
-
+    required: true,
+  },
+  region: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Region',
+    required: true, // Puedes cambiarlo a true si es obligatorio
   }
 });
 
