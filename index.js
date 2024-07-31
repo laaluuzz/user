@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const userRoute = require('./routes/user');  // Asegúrate de que la ruta sea correcta
+const userRoute = require('./routes/user');
 const regionRoute = require('./routes/region');
 const cityRoute = require('./routes/city');
+const consultationRoute = require('./routes/consultation'); // Asegúrate de que este archivo exista
 
 const cors = require('cors');
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use('/api', userRoute);   // Asegúrate de que '/api' sea el prefijo correcto
 app.use('/api', regionRoute);
 app.use('/api', cityRoute);
+app.use('/api', consultationRoute); // Añade esta línea para las consultas
 
 // Conexión a MongoDB
 mongoose

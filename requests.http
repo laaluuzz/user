@@ -51,3 +51,12 @@ Content-Type: application/json
 {
   "name": "Nueva Region"
 }
+
+###
+curl -X POST http://localhost:9000/api/users/66a99bcb061dfa5c3ef62ec0/consultations \
+-H "Content-Type: application/json" \
+-d '{
+  "date": "2024-08-01T10:00:00Z",
+  "reason": "Follow-up",
+  "details": "Patient needs further evaluation."
+}'

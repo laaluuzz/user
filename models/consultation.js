@@ -1,7 +1,11 @@
-// models/consultation.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const consultationSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   date: {
     type: Date,
     required: true
@@ -12,11 +16,6 @@ const consultationSchema = mongoose.Schema({
   },
   details: {
     type: String,
-    required: false
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Referencia al modelo de usuario
     required: true
   }
 });
