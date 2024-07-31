@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const userRoute = require("./routes/user");
 const regionRoute = require("./routes/region");
+const cityRoute = require("./routes/city");
 
-const cors = require("cors"); // Importa el middleware CORS
+const cors = require("cors");
 
 // settings
 const app = express();
@@ -12,16 +13,17 @@ const port = process.env.PORT || 9000;
 
 // middlewares
 app.use(express.json());
-app.use(cors()); // Aplica el middleware CORS a todas las rutas
+app.use(cors());
 
 // routes
 app.get("/", (req, res) => {
   res.send("Welcome to my API");
 });
 
-// Rutas de usuarios utilizando el middleware de ruta
+// Rutas de usuarios, regiones y ciudades
 app.use("/api", userRoute);
-app.use("/api", regionRoute); // Añade las rutas de región
+app.use("/api", regionRoute);
+app.use("/api", cityRoute);
 
 // mongodb connection
 mongoose

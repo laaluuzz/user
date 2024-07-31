@@ -7,16 +7,21 @@ const userSchema = mongoose.Schema({
   },
   age: {
     type: Number,
-    required: true,
+    required: true
   },
   email: {
     type: String,
-    required: true,
+    required: true
   },
   region: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Region',
-    required: true, // Puedes cambiarlo a true si es obligatorio
+    ref: 'Region', // Asumiendo que tienes un modelo de Región
+    required: true
+  },
+  city: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'City', // Asumiendo que tienes un modelo de Ciudad
+    required: true
   }
 });
 

@@ -1,32 +1,36 @@
 const express = require("express");
-const userSchema = require("../models/user");
+const User = require("../models/user");
+const Region = require("../models/region"); // Asegúrate de que esto también está actualizado
+const City = require("../models/city");
 
 const router = express.Router();
 
-// create user
+// Create user
 router.post("/users", (req, res) => {
-  const user = userSchema(req.body);
+  const user = new User(req.body);
   user
     .save()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
-// get all users
+// Get all users
 router.get("/users", (req, res) => {
-  userSchema
+  User
     .find()
-    .populate('region')
+    .populate('region')  // Popula la región
+    .populate('city')    // Popula la ciudad
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
 
-// get a user
+// Get a user
 router.get("/users/:id", (req, res) => {
   const { id } = req.params;
-  userSchema
+  User
     .findById(id)
-    .populate('region')
+    .populate('region')  // Popula la región
+    .populate('city')    // Popula la ciudad
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
@@ -34,7 +38,7 @@ router.get("/users/:id", (req, res) => {
 // Delete a user
 router.delete("/users/:id", (req, res) => {
   const { id } = req.params;
-  userSchema
+  User
     .deleteOne({ _id: id })
     .then((data) => {
       if (data.deletedCount === 0) {
@@ -45,12 +49,12 @@ router.delete("/users/:id", (req, res) => {
     .catch((error) => res.status(500).json({ message: error.message }));
 });
 
-// update a user
+// Update a user
 router.put("/users/:id", (req, res) => {
   const { id } = req.params;
-  const { name, age, email, region } = req.body;
-  userSchema
-    .updateOne({ _id: id }, { $set: { name, age, email, region } })
+  const { name, age, email, region, city } = req.body;
+  User
+    .updateOne({ _id: id }, { $set: { name, age, email, region, city } })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
