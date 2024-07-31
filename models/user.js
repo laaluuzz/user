@@ -11,7 +11,15 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: true
+    required: false
+  },
+  telefono: {
+    type: String,
+    required: false
+  },
+  cesfam: {
+    type: String,
+    required: false
   },
   region: {
     type: mongoose.Schema.Types.ObjectId,
