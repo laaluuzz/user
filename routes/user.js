@@ -1,46 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const Consultation = require('../models/consultation'); // Importa el modelo de consulta
+const Region = require('../models/region'); // Asegúrate de que estos modelos existan
+const City = require('../models/city');
 
-// Get all users with consultations
-router.get('/users', async (req, res) => {
-  try {
-    const users = await User.find()
-      .populate('region')
-      .populate('city')
-      .populate({
-        path: 'consultations',  // Asegúrate de que el campo 'consultations' existe en el modelo de User
-        populate: { path: 'user' } // Opcional, si necesitas datos de usuario en las consultas
-      });
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+// Crear un nuevo usuario
+router.post('/users', async (req, res) => {
+    try {
+        // Verifica que la región y ciudad existen
+        const region = await Region.findById(req.body.region);
+        const city = await City.findById(req.body.city);
 
-// Get a user by ID with consultations
-router.get('/users/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id)
-      .populate('region')
-      .populate('city')
-      .populate({
-        path: 'consultations',  // Asegúrate de que el campo 'consultations' existe en el modelo de User
-        populate: { path: 'user' } // Opcional, si necesitas datos de usuario en las consultas
-      });
+        if (!region) {
+            return res.status(400).json({ message: 'Region not found' });
+        }
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+        if (!city) {
+            return res.status(400).json({ message: 'City not found' });
+        }
+
+        const user = new User({
+            name: req.body.name,
+            age: req.body.age,
+            email: req.body.email,
+            telefono: req.body.telefono,
+            cesfam: req.body.cesfam,
+            region: req.body.region,
+            city: req.body.city,
+            consultations: [] // Inicialmente vacío
+        });
+
+        const savedUser = await user.save();
+        res.status(201).json(savedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
 });
-
-// Other routes for create, update, delete
 
 module.exports = router;
