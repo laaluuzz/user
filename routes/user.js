@@ -1,62 +1,46 @@
-const express = require("express");
-const User = require("../models/user");
-const Region = require("../models/region"); // Asegúrate de que esto también está actualizado
-const City = require("../models/city");
-
+const express = require('express');
 const router = express.Router();
+const User = require('../models/user');
+const Consultation = require('../models/consultation'); // Importa el modelo de consulta
 
-// Create user
-router.post("/users", (req, res) => {
-  const user = new User(req.body);
-  user
-    .save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+// Get all users with consultations
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find()
+      .populate('region')
+      .populate('city')
+      .populate({
+        path: 'consultations',  // Asegúrate de que el campo 'consultations' existe en el modelo de User
+        populate: { path: 'user' } // Opcional, si necesitas datos de usuario en las consultas
+      });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-// Get all users
-router.get("/users", (req, res) => {
-  User
-    .find()
-    .populate('region')  // Popula la región
-    .populate('city')    // Popula la ciudad
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
+// Get a user by ID with consultations
+router.get('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id)
+      .populate('region')
+      .populate('city')
+      .populate({
+        path: 'consultations',  // Asegúrate de que el campo 'consultations' existe en el modelo de User
+        populate: { path: 'user' } // Opcional, si necesitas datos de usuario en las consultas
+      });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-// Get a user
-router.get("/users/:id", (req, res) => {
-  const { id } = req.params;
-  User
-    .findById(id)
-    .populate('region')  // Popula la región
-    .populate('city')    // Popula la ciudad
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
-
-// Delete a user
-router.delete("/users/:id", (req, res) => {
-  const { id } = req.params;
-  User
-    .deleteOne({ _id: id })
-    .then((data) => {
-      if (data.deletedCount === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      res.json({ message: 'User deleted successfully' });
-    })
-    .catch((error) => res.status(500).json({ message: error.message }));
-});
-
-// Update a user
-router.put("/users/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, age, email, region, city } = req.body;
-  User
-    .updateOne({ _id: id }, { $set: { name, age, email, region, city } })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error }));
-});
+// Other routes for create, update, delete
 
 module.exports = router;

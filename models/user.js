@@ -1,10 +1,9 @@
-// models/user.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   age: {
     type: String,
@@ -32,7 +31,7 @@ const userSchema = mongoose.Schema({
     ref: 'City',
     required: true
   },
-  consultations: [{
+  consultations: [{ // Añade esta línea para incluir las consultas
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Consultation'
   }]
