@@ -4,6 +4,7 @@ require("dotenv").config();
 const userRoute = require("./routes/user");
 const regionRoute = require("./routes/region");
 const cityRoute = require("./routes/city");
+const consultationRoute = require("./routes/consultation"); // Importa las rutas de consultas
 
 const cors = require("cors");
 
@@ -20,10 +21,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to my API");
 });
 
-// Rutas de usuarios, regiones y ciudades
-app.use("/api", userRoute);
-app.use("/api", regionRoute);
-app.use("/api", cityRoute);
+// Rutas de usuarios, regiones, ciudades y consultas
+app.use("/api/users", userRoute);
+app.use("/api/regions", regionRoute);
+app.use("/api/cities", cityRoute);
+app.use("/api/consultations", consultationRoute); // Usa las rutas de consultas
 
 // mongodb connection
 mongoose

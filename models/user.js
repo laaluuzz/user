@@ -1,3 +1,4 @@
+// models/user.js
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
@@ -23,14 +24,18 @@ const userSchema = mongoose.Schema({
   },
   region: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Region', // Asumiendo que tienes un modelo de Región
+    ref: 'Region',
     required: true
   },
   city: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'City', // Asumiendo que tienes un modelo de Ciudad
+    ref: 'City',
     required: true
-  }
+  },
+  consultations: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Consultation'
+  }]
 });
 
 module.exports = mongoose.model('User', userSchema);
