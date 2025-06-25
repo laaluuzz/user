@@ -26,5 +26,33 @@ Content-Type: application/json
   "password": "123456"
 }
 
+### Crear un viaje (requiere token)
+POST http://localhost:9000/api/trips
+Content-Type: application/json
+Authorization: Bearer AQUÍ_EL_TOKEN
+
+{
+  "nombre": "Viaje a la playa",
+  "fechaIda": "2024-08-01",
+  "fechaVuelta": "2024-08-10"
+}
+
+### Listar viajes de un usuario (requiere token)
+GET http://localhost:9000/api/trips
+Authorization: Bearer AQUÍ_EL_TOKEN
+
+### Obtener un viaje por su ID (requiere token)
+GET http://localhost:9000/api/trips/AQUI_EL_ID_DEL_VIAJE
+Authorization: Bearer AQUÍ_EL_TOKEN
+
+### Editar información de un día del itinerario (requiere token)
+PUT http://localhost:9000/api/trips/AQUI_EL_ID_DEL_VIAJE/itinerario/1
+Content-Type: application/json
+Authorization: Bearer AQUÍ_EL_TOKEN
+
+{
+  "actividades": "Visitar la playa, almorzar en restaurante X, paseo por el centro"
+}
+
 ### Obtener todos los usuarios
 GET http://localhost:9000/api/users

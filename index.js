@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoute = require('./routes/user');
+const tripRoute = require('./routes/trip');
 const cors = require('cors');
 
 // Configuración del servidor
@@ -14,6 +15,7 @@ app.use(cors());
 
 // Rutas
 app.use('/api', userRoute);
+app.use('/api', tripRoute);
 
 // Conexión a MongoDB
 mongoose

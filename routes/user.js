@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'secreto_super_seguro';
 
 // Registro de usuario
 router.post('/register', async (req, res) => {
@@ -32,7 +35,9 @@ router.post('/login', async (req, res) => {
     if (!user || user.password !== password) {
       return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
-    res.status(200).json({ message: 'Login exitoso.' });
+    // Generar token JWT
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '2h' });
+    res.status(200).json({ message: 'Login exitoso.', token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
