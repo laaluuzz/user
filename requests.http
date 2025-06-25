@@ -54,5 +54,9 @@ Authorization: Bearer AQUÍ_EL_TOKEN
   "actividades": "Visitar la playa, almorzar en restaurante X, paseo por el centro"
 }
 
+### Eliminar un viaje (requiere token)
+DELETE http://localhost:9000/api/trips/AQUI_EL_ID_DEL_VIAJE
+Authorization: Bearer AQUÍ_EL_TOKEN
+
 ### Obtener todos los usuarios
 GET http://localhost:9000/api/users

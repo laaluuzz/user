@@ -113,4 +113,18 @@ router.put('/trips/:id/itinerario/:dia', auth, async (req, res) => {
   }
 });
 
+// Eliminar un viaje (protegido)
+router.delete('/trips/:id', auth, async (req, res) => {
+  try {
+    const trip = await Trip.findOneAndDelete({ _id: req.params.id, user: req.userId });
+    if (!trip) {
+      return res.status(404).json({ message: 'Viaje no encontrado o no autorizado.' });
+    }
+    res.status(200).json({ message: 'Viaje eliminado correctamente.' });
+  } catch (error) {
+    console.error('[DELETE /trips/:id] Error:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router; 
