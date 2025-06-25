@@ -1,81 +1,27 @@
-###
-POST http://localhost:9000/api/users HTTP/1.1
-Content-Type: application/json
-{
-  "name": "Nikola Tesla",
-  "age": "80-01-01",  // Formato de fecha, ajusta según sea necesario
-  "email": "nikolatesla@email.com",
-  "telefono": "123456789",
-  "cesfam": "Central Hospital",
-  "region": "66a98b9ba4b0ff4e0dbc6bd8",  // ID de la región (debe existir en la base de datos)
-  "city": "66a98c5ba4b0ff4e0dbc6c16"     // ID de la ciudad (debe existir en la base de datos)
-}
-
-###
-curl -X POST http://localhost:9000/api/users \
-     -H "Content-Type: application/json" \
-     -d '{
-           "name": "Nikola Tesla",
-           "age": "80-01-01",
-           "email": "nikolatesla@email.com",
-           "telefono": "123456789",
-           "cesfam": "Central Hospital",
-           "region": "66a98b9ba4b0ff4e0dbc6bd8",
-           "city": "66a98c5ba4b0ff4e0dbc6c16"
-         }'
-
-###
-GET http://localhost:9000/api/users HTTP/1.1
-
-###
-GET http://localhost:9000/api/users/66a99bcb061dfa5c3ef62ec0 HTTP/1.1
-
-###
-DELETE http://localhost:9000/api/users/66611b10cd9cdde9812e4cae HTTP/1.1
-
-###
-PUT http://localhost:9000/api/users/66611b85cd9cdde9812e4cb9 HTTP/1.1
+### Registro de usuario
+POST http://localhost:9000/api/register
 Content-Type: application/json
 
 {
-  "name": "John Conway",
-  "age": 12,
-  "email": "johnconway@email.com"
+  "login": "ejemploUsuario",
+  "email": "ejemplo@correo.com",
+  "password": "123456"
 }
 
-###
-POST http://localhost:9000/api/regions HTTP/1.1
+### Login de usuario con login
+POST http://localhost:9000/api/login
 Content-Type: application/json
 
 {
-  "name": "Region Metropolitana"
+  "loginOrEmail": "ejemploUsuario",
+  "password": "123456"
 }
 
-###
-GET http://localhost:9000/api/regions HTTP/1.1
-
-###
-GET http://localhost:9000/api/cities HTTP/1.1
-
-###
-GET http://localhost:9000/api/regions/66a97ff7fa81d938489184a7 HTTP/1.1
-
-###
-DELETE http://localhost:9000/api/regions/66a97ff6fa81d938489184a5 HTTP/1.1
-
-###
-PUT http://localhost:9000/api/regions/66a97ff7fa81d938489184a7 HTTP/1.1
+### Login de usuario con email
+POST http://localhost:9000/api/login
 Content-Type: application/json
 
 {
-  "name": "Nueva Region"
+  "loginOrEmail": "ejemplo@correo.com",
+  "password": "123456"
 }
-
-###
-curl -X POST http://localhost:9000/api/users/66a99bcb061dfa5c3ef62ec0/consultations \
--H "Content-Type: application/json" \
--d '{
-  "date": "2024-08-01T10:00:00Z",
-  "reason": "Follow-up",
-  "details": "Patient needs further evaluation."
-}'

@@ -1,40 +1,20 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
-  name: {
+const userSchema = new mongoose.Schema({
+  login: {
     type: String,
-    required: true
-  },
-  age: {
-    type: String,
-    required: true
+    required: true,
+    unique: true
   },
   email: {
     type: String,
-    required: false
+    required: true,
+    unique: true
   },
-  telefono: {
+  password: {
     type: String,
-    required: false
-  },
-  cesfam: {
-    type: String,
-    required: false
-  },
-  region: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Region',
     required: true
-  },
-  city: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'City',
-    required: true
-  },
-  consultations: [{ // Añade esta línea para incluir las consultas
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Consultation'
-  }]
+  }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema); 

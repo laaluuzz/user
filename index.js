@@ -2,10 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const userRoute = require('./routes/user');
-const regionRoute = require('./routes/region');
-const cityRoute = require('./routes/city');
-const consultationRoute = require('./routes/consultation');
-
 const cors = require('cors');
 
 // Configuración del servidor
@@ -18,9 +14,6 @@ app.use(cors());
 
 // Rutas
 app.use('/api', userRoute);
-app.use('/api', regionRoute);
-app.use('/api', cityRoute);
-app.use('/api', consultationRoute);
 
 // Conexión a MongoDB
 mongoose
