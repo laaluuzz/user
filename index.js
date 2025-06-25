@@ -8,9 +8,20 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 9000;
 
+// Configuración de CORS para desarrollo y producción
+const allowedOrigins = [
+  'http://localhost:9000', // desarrollo local
+  'https://user-opyf.onrender.com/'  // producción, reemplaza por tu dominio real
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 // Middleware
 app.use(express.json());
-app.use(cors());
 
 // Rutas
 app.use('/api', userRoute);
